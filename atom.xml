@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[技术博客]]></title>
+  <subtitle><![CDATA[Happy Code]]></subtitle>
+  <link href="http://www.happycode.org/atom.xml" rel="self"/>
+  <link href="http://www.happycode.org/"/>
+  <updated>2016-03-07T06:32:09.000Z</updated>
+  <id>http://www.happycode.org/</id>
+  
+  <author>
+    <name><![CDATA[qianyang]]></name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[ssh免密码登陆]]></title>
+    <link href="http://www.happycode.org/2016/03/07/ssh-authorized/"/>
+    <id>http://www.happycode.org/2016/03/07/ssh-authorized/</id>
+    <published>2016-03-07T06:11:28.000Z</published>
+    <updated>2016-03-07T06:32:09.000Z</updated>
+    <content type="html"><![CDATA[<p>背景：在Mac上使用iTerm登陆linux服务器，一直要提示输入密码，比较麻烦，所以采用免密码的方式登陆比较方便，所谓无密码登陆其实是指通过证书认证的方式登陆，使用一种被称为”公私钥”认证的方式来进行ssh登录。</p>
+<p> 　　在linux系统中,ssh是远程登录的默认工具,因为该工具的协议使用了RSA/DSA的加密算法.该工具做linux系统的远程管理是非常安全的。telnet,因为其不安全性,在linux系统中被搁置使用了。</p>
+<p>　　“公私钥”认证方式简单的解释:首先在客户端上创建一对公私钥 （公钥文件：~/.ssh/id_rsa.pub； 私钥文件：~/.ssh/id_rsa）。然后把公钥放到服务器上（~/.ssh/authorized_keys）, 自己保留好私钥.在使用ssh登录时,ssh程序会发送私钥去和服务器上的公钥做匹配.如果匹配成功就可以登录了。</p>
+<p><strong> 场景：从Mac免密码登陆到10.105.18.xx服务器 </strong></p>
+<h3 id="u751F_u4EA7_u5BC6_u94A5_u5BF9"><a href="#u751F_u4EA7_u5BC6_u94A5_u5BF9" class="headerlink" title="生产密钥对"></a>生产密钥对</h3><p><code>ssh-keygen -t rsa -C &quot;xxxx@gmail.com”</code></p>
+<p>在Mac上输入上面的命令，然后一路点回车，会在当前用户的.ssh/目录下生成id_rsa(私钥)，id_rsa(公钥)。</p>
+<h3 id="u628A_u516C_u94A5_u4E0A_u4F20_u5230_u767B_u9646_u7684_u76EE_u6807_u670D_u52A1_u5668"><a href="#u628A_u516C_u94A5_u4E0A_u4F20_u5230_u767B_u9646_u7684_u76EE_u6807_u670D_u52A1_u5668" class="headerlink" title="把公钥上传到登陆的目标服务器"></a>把公钥上传到登陆的目标服务器</h3><p><code>scp .ssh/id_rsa.pub root@10.105.18.xx:/root/.ssh/xxx.pub</code><br><code>root@10.105.18.45&#39;s password:</code></p>
+<p>在Mac上输入上面的命令，把id_rsa.pub上传到要登陆的服务器10.105.18.xx，注意要输入目标服务器的密码。</p>
+<h3 id="u5728_u76EE_u6807_u670D_u52A1_u5668_u628A_u516C_u94A5_u52A0_u5165_u5230authorized_keys"><a href="#u5728_u76EE_u6807_u670D_u52A1_u5668_u628A_u516C_u94A5_u52A0_u5165_u5230authorized_keys" class="headerlink" title="在目标服务器把公钥加入到authorized_keys"></a>在目标服务器把公钥加入到authorized_keys</h3><p><code>cat ~/.ssh/xxx.pub &gt;&gt; ~/.ssh/authorized_keys</code><br><code>chmod 600 ~/.ssh/authorized_keys</code></p>
+<p>注意：要把authorized_keys文件赋予600权限</p>
+<h3 id="u53EF_u4EE5_u514D_u5BC6_u7801_u767B_u9646_u4E86"><a href="#u53EF_u4EE5_u514D_u5BC6_u7801_u767B_u9646_u4E86" class="headerlink" title="可以免密码登陆了"></a>可以免密码登陆了</h3><p>在Mac下面登陆服务器<br><code>ssh root@10.105.18.xx</code></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>背景：在Mac上使用iTerm登陆linux服务器，一直要提示输入密码，比较麻烦，所以采用免密码的方式登陆比较方便，所谓无密码登陆其实是指通过证书认证的方式登陆，使用一种被称为”公私钥”认证的方式来进行ssh登录。</p>
+<p> 　　在linux系统中,ssh是远程登录的]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[OAuth详解]]></title>
+    <link href="http://www.happycode.org/2016/02/21/oauth/"/>
+    <id>http://www.happycode.org/2016/02/21/oauth/</id>
+    <published>2016-02-21T12:19:55.000Z</published>
+    <updated>2016-02-25T05:29:23.000Z</updated>
+    <content type="html"><![CDATA[<p>OAuth是近年来逐渐广为使用的Web服务认证协议，他所解决的是在Web服务之间共享一个身份认证的问题。</p>
+<h1 id="OAuth_u540D_u8BCD_u89E3_u91CA"><a href="#OAuth_u540D_u8BCD_u89E3_u91CA" class="headerlink" title="OAuth名词解释"></a>OAuth名词解释</h1><p><em>OAuth（开放授权）是一个开放标准，允许用户让第三方应用访问该用户在某一网站上存储的私密的资源（如照片，视频，联系人列表），而无需将用户名和密码提供给第三方应用。</em></p>
+<p><em>OAuth允许用户提供一个令牌，而不是用户名和密码来访问他们存放在特定服务提供者的数据。每一个令牌授权一个特定的网站（例如，视频编辑网站)在特定的时段（例如，接下来的2小时内）内访问特定的资源（例如仅仅是某一相册中的视频）。这样，OAuth让用户可以授权第三方网站访问他们存储在另外服务提供者的某些特定信息，而非所有内容。</em></p>
+<p><em>OAuth是OpenID的一个补充，但是完全不同的服务。</em></p>
+<p>引用自 <a href="https://zh.wikipedia.org/wiki/OAuth" target="_blank" rel="external">维基百科</a></p>
+<p>以上是维基百科对OAuth的名词解释，已经非常准确和详细，关于什么是开发授权？OAuth和OpenID有什么区别？我这里再补充下：</p>
+<ul>
+<li><h3 id="u5C01_u95ED_u6388_u6743"><a href="#u5C01_u95ED_u6388_u6743" class="headerlink" title="封闭授权"></a>封闭授权</h3><em>系统内部用户之间的相互授权，不能支持与外部系统与用户之间的授权，如：</em></li>
+</ul>
+<ol>
+<li>QQ空间访问权限</li>
+<li>微信查看朋友圈信息权限（不让他看我的朋友圈，不看他的朋友圈）</li>
+</ol>
+<ul>
+<li><h3 id="u5F00_u653E_u6388_u6743"><a href="#u5F00_u653E_u6388_u6743" class="headerlink" title="开放授权"></a>开放授权</h3><em>支持将系统内资源授权给第三方应用使用，但最终的权限控制掌控在用户手中，不会出现安全和隐私不可控的情况</em></li>
+</ul>
+<ol>
+<li>支持细粒度权限控制（微信授权可以发朋友圈，可以分享给好友等社交功能）</li>
+<li>不会泄露用户密码或其他认证凭证（在微信分享给好友或者发朋友圈的时候，不会用到你的微信密码）</li>
+</ol>
+<ul>
+<li><h3 id="OAuth_u548COpenID_u6709_u4EC0_u4E48_u533A_u522B_uFF1F"><a href="#OAuth_u548COpenID_u6709_u4EC0_u4E48_u533A_u522B_uFF1F" class="headerlink" title="OAuth和OpenID有什么区别？"></a>OAuth和OpenID有什么区别？</h3><p><em>OAuth 关注的是 authorization( 授权 ) ；而 OpenID 侧重的是 authentication （认证）。</em><br>OAuth 关注的是授权，即：“用户能做什么”；而 OpenID 关注的是证明，即：“用户是谁”。</p>
+<p>  纵观账号互通发展史，可以发现OAuth比起其它协议（如OpenID）更流行的原因是，业务双方不仅要求账号本身的认证互通（authentication；认证，可理解为“我在双方的地盘姓甚名谁”），而是更需要双方业务流的授权打通（authorization；授权，可理解为“我在双方的地盘上可做什么”），因为后者才能产生实际的互惠互利。</p>
+<p>  总之，很多网站、APP 弱化甚至没有搭建自己的账号体系，而是直接使用社会化登录的方式，这样不仅免去了用户注册账号的麻烦、还可以获取用户的好友关系来增强自身的社交功能。</p>
+</li>
+</ul>
+<h1 id="OAuth_u5386_u53F2"><a href="#OAuth_u5386_u53F2" class="headerlink" title="OAuth历史"></a>OAuth历史</h1><ul>
+<li>2007年4月，成立OAuth讨论组并撰写了一个开放协议的提议草案。</li>
+<li>2007年10月, OAuth核心1.0最后的草案发布了。</li>
+<li>2009年4月23日，OAuth 1.0被爆出有安全漏洞，于是发布了OAuth 1.0a修复了这个安全漏洞。</li>
+<li>2010年4月，OAuth 1.0协议发表为RFC 5849，一个非正式RFC。</li>
+<li>2012年10月，OAuth 2.0协议正式发布为RFC 6749。OAuth 2.0关注客户端开发者的简易性，同时为Web应用，桌面应用和手机，和起居室设备提供专门的认证流程。</li>
+</ul>
+<h1 id="OAuth_u534F_u8BAE"><a href="#OAuth_u534F_u8BAE" class="headerlink" title="OAuth协议"></a>OAuth协议</h1><h3 id="u534F_u8BAE_u7684_u53C2_u4E0E_u8005"><a href="#u534F_u8BAE_u7684_u53C2_u4E0E_u8005" class="headerlink" title="协议的参与者"></a>协议的参与者</h3><ul>
+<li>RO (resource owner): 资源所有者，对资源具有授权能力的人。</li>
+<li>RS (resource server): 资源服务器，它存储资源，并处理对资源的访问请求。</li>
+<li>Client: 第三方应用，它获得RO的授权后便可以去访问RO的资源。</li>
+<li>AS (authorization server): 授权服务器，它认证RO的身份，为RO提供授权审批流程，并最终颁发授权令牌(Access Token)。</li>
+</ul>
+<h3 id="OAuth2-0_u4E3A_u4E86_u652F_u6301_u8FD9_u4E9B_u4E0D_u540C_u7C7B_u578B_u7684_u7B2C_u4E09_u65B9_u5E94_u7528_uFF0C_u63D0_u51FA_u4E86_u4E0B_u9762_u56DB_u79CD_u6388_u6743_u7C7B_u578B_uFF1A"><a href="#OAuth2-0_u4E3A_u4E86_u652F_u6301_u8FD9_u4E9B_u4E0D_u540C_u7C7B_u578B_u7684_u7B2C_u4E09_u65B9_u5E94_u7528_uFF0C_u63D0_u51FA_u4E86_u4E0B_u9762_u56DB_u79CD_u6388_u6743_u7C7B_u578B_uFF1A" class="headerlink" title="OAuth2.0为了支持这些不同类型的第三方应用，提出了下面四种授权类型："></a>OAuth2.0为了支持这些不同类型的第三方应用，提出了下面四种授权类型：</h3><ul>
+<li>授权码 (Authorization Code Grant)，适用于有server端的应用授权。最常用的授权方式</li>
+<li>隐式授权 (Implicit Grant)，适用于通过客户端访问的应用授权。适用于纯JS程序</li>
+<li>资源所有者密码凭证许可 (Resource Owner Password Credentials Grant)，OAuth简化版，常用于移动应用认证，称为xAuth。在客户端高度可信且授权码流程不方便实施的情况下试用。</li>
+<li>受保护资源的客户端授权 (Client Credentials Grant)。客户端高度可信，拥有被操作资源（自用型），或操作非敏感资源。</li>
+</ul>
+<h1 id="OAuth_u6388_u6743_u6B65_u9AA4"><a href="#OAuth_u6388_u6743_u6B65_u9AA4" class="headerlink" title="OAuth授权步骤"></a>OAuth授权步骤</h1><h3 id="Authorization_Code__u6388_u6743"><a href="#Authorization_Code__u6388_u6743" class="headerlink" title="Authorization Code 授权"></a>Authorization Code 授权</h3><ol>
+<li><p>授权场景</p>
+<p> Authorization code 授权适用于PC，无线客户端等需要和第三方server进行交互的应用场景。使用Authorization code授权，第三方能够集中处理用户的授权请求和授权结果，适用于有server端的应用。</p>
+</li>
+<li><p>授权流程</p>
+<p> Authorization code授权模式分为两步，首先获取authorization code，然后用code获取acces token<br>交互图：<br><img src="http://www.happycode.org/./image/authorization-code-grant-flow.jpg" alt="authorization-code 交互图"><br>流程图<br><img src="http://www.happycode.org/./image/authorization-code-grant.png" alt="authorization-code 流程图"></p>
+</li>
+<li><p>过程详解</p>
+<p> A. 用户访问应用，应用将用户引向认证服务器。比如唯品会想要获取QQ用户一些资源，首先将用户引向QQ的授权页面(授权服务器返回)。如下图：<br><img src="http://www.happycode.org/./image/vip-qq.jpg" alt="QQ授权登陆页"><br>应用申请认证的URL，包含以下参数：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http<span class="variable">s:</span>//graph.qq.<span class="keyword">com</span>/oauth/show?</span><br><span class="line">which=Login&amp;<span class="keyword">display</span>=<span class="keyword">pc</span>&amp;client_id=<span class="number">100292427</span>&amp;</span><br><span class="line">redirect_uri=http<span class="variable">s:</span>//passport.vip.<span class="keyword">com</span>/callback/qq&amp;</span><br><span class="line">response_type=code&amp;state=<span class="number">0580</span>e4416bfe4e4e81611d7c3d08d655</span><br></pre></td></tr></table></figure>
+<ul>
+<li>response_type：这个值必须是 “code”，用于获取授权码(authorization code)；必选。</li>
+<li>client_id：应用的 ID 名称；必选。</li>
+<li>redirect_uri： 授权回调地址，必须和应用注册的地址一致；必选。</li>
+<li>state：client端的状态值。用于第三方应用防止CSRF攻击，成功授权后回调时会原样带回。请务必严格按照流程检查用户与state参数状态的绑定；可选。</li>
+<li>scope：应用申请权限的范围；可选。</li>
+</ul>
+<p>B. 用户在授权服务器返回的页面上选择是否给予此应用授权（用户必须显式同意或拒绝）。如第一幅图，QQ授权服务器返回一个界面，有应用想获取的资源，用户来决定是否给予这些授权。</p>
+<p>C. 如果用户同意授权，认证服务器将用户转向应用已经指定的 重定向链接(redirection URI)，重定向链接包必须含一个授权码(authorization_code)；不同意则通过 重定向链接(redirection URI) 返回对应的 ERROR 信息。</p>
+<p>D. 应用收到授权码，加上之前的重定向链接和认证应用身份的数据，访问认证服务器来获取授权令牌(Access Token)。</p>
+<p>请求参数：</p>
+<ul>
+<li>grant_type: 授权类型，此值为：authorization_code，必选。</li>
+<li>client_id: 分配给应用的appid，必选。</li>
+<li>client_secret： 分配给应用的secret，必选。</li>
+<li>redirect_uri：与上面一步中传入的redirect_uri保持一致，必选。</li>
+<li>code：上一步返回的authorization_code，必选。</li>
+<li>state：client端的状态值。用于第三方应用防止CSRF攻击，成功授权后回调时会原样带回。请务必严格按照流程检查用户与state参数状态的绑定。必选。</li>
+</ul>
+<p>E. 认证服务器收到 D 中的数据后，首先验证应用合法性，其次验证 redirect_uri 与 C 中的是否一致，验证通过后，返回授权令牌。</p>
+<p>返回参数：</p>
+<ul>
+<li>access_token：授权令牌，必须。</li>
+<li>expires_in：该access_token的有效期，必须。</li>
+<li>refresh_token：在授权自动续期步骤中，获取新的Access_Token时需要提供的参数，必须。</li>
+</ul>
+</li>
+</ol>
+<h1 id="u91CD_u8981_u6587_u732E"><a href="#u91CD_u8981_u6587_u732E" class="headerlink" title="重要文献"></a>重要文献</h1><p><a href="http://www.rfcreader.com/#rfc6749" target="_blank" rel="external">The OAuth 2.0 Authorization Framework</a><br><a href="https://zh.wikipedia.org/wiki/OpenID" target="_blank" rel="external">OpenID</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>OAuth是近年来逐渐广为使用的Web服务认证协议，他所解决的是在Web服务之间共享一个身份认证的问题。</p>
+<h1 id="OAuth_u540D_u8BCD_u89E3_u91CA"><a href="#OAuth_u540D_u8BCD_u89E3_u91CA" ]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[《年薪20万到80万的进击》有感]]></title>
+    <link href="http://www.happycode.org/2016/01/31/20to80/"/>
+    <id>http://www.happycode.org/2016/01/31/20to80/</id>
+    <published>2016-01-31T12:39:27.000Z</published>
+    <updated>2016-02-25T05:35:01.000Z</updated>
+    <content type="html"><![CDATA[<p>一本关于程序员跳槽的书，也包含了一些技术大牛对晋级的介绍，职场的一些看法，文章不多，一口气看完，觉得有些观点还是比较受用，尤其在职场方面，由于程序员的一些特性，给我们的启迪比较切中要点。</p>
+<p><em>1.沉默寡言，不善言谈是描述程序员的标配。「在公开场合讲话是一个非常有用的技能。很多时候很多事情你自己因为太熟悉，就假设别人也和你一样熟悉。但是现实不是这样的，你需要持续地进行有效的沟通，别人才能真的懂」。<br>2.世界上不存在怀才不遇的事情，在于相互了解。<br>3.对于公司来说，最重要的是走在方向正确的道路上，而这个方向选择，其实取决于老板和董事会。<br>4.在职场中，和直接上司的相处可以说是最重要的。作为程序员一定不能只顾着埋头coding，要「了解整个公司的架构，商业模式和方向」，要知道「很多时候，老板最需要的不是最埋头苦干的，而是最能和老板沟通的」<br>5.怎样才能掌握沟通的技巧呢？首先，多看维基百科，中文和英文的都可以，这是很棒的写作范式。学习维基百科不带情绪，立场，预设地讲述一件事情，简洁清晰的表达方式。<br>6.答应老板一件事，应该主动给出一个Deadline，给老板一个心理预期，知道你工作的节奏。如果工作中遇到困难，马上花15分钟做判断，不能解决立马向老板提出来，千万不要自己闷着捣鼓三天，最后还搞不定，耽误了团队的进程–这是非常「不成熟」的表现。<br>7.程序员的职业发展道路不应该是沉默而孤独的，自由而热烈的交流更能推动自身的不断成长。
+</em></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>一本关于程序员跳槽的书，也包含了一些技术大牛对晋级的介绍，职场的一些看法，文章不多，一口气看完，觉得有些观点还是比较受用，尤其在职场方面，由于程序员的一些特性，给我们的启迪比较切中要点。</p>
+<p><em>1.沉默寡言，不善言谈是描述程序员的标配。「在公开场合讲话是一个]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[同时管理多个git平台的ssh key]]></title>
+    <link href="http://www.happycode.org/2016/01/30/git-config/"/>
+    <id>http://www.happycode.org/2016/01/30/git-config/</id>
+    <published>2016-01-29T23:16:15.000Z</published>
+    <updated>2016-02-04T07:10:24.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="git_u5E73_u53F0_u591Assh_u914D_u7F6E_u9700_u6C42"><a href="#git_u5E73_u53F0_u591Assh_u914D_u7F6E_u9700_u6C42" class="headerlink" title="git平台多ssh配置需求"></a>git平台多ssh配置需求</h3><p>git是代码版本管理的利器，由于公司用gitlab，自己也有github账号，默认情况下每个账户生成的秘钥位置和名称都是相同的，这样后生成的秘钥就会覆盖前面的秘钥导致其失效。解决的办法就是在生成后一个秘钥的时候对其重新命名，以避免冲突，同时将不同的秘钥配置到相对应的Host上面，这样在访问不同的远程仓库时调用不同的key,冲突也就解决了。</p>
+<h3 id="git_u591Assh_u914D_u7F6E"><a href="#git_u591Assh_u914D_u7F6E" class="headerlink" title="git多ssh配置"></a>git多ssh配置</h3><p><strong> 1.生成指定名字的密钥 </strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">"邮箱地址"</span> <span class="operator">-f</span> ~/.ssh/github</span><br></pre></td></tr></table></figure>
+<p>会在~/.ssh/目录下生成 github 和 github.pub 这两个文件</p>
+<p><strong> 2.添加ssh私钥 </strong></p>
+<p>因为新生成的key不能加入ssh就会导致连接不上github，所以先要添加私钥。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">sudo</span> ssh-<span class="keyword">add </span>~/.ssh/github.pub</span><br></pre></td></tr></table></figure>
+<p>这样就可以了。</p>
+<p><strong> 3.ssh公钥复制到托管平台上 </strong></p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~<span class="regexp">/.ssh/github</span>.pub</span><br></pre></td></tr></table></figure>
+<p>打开公钥文件 github.pub ，并把内容复制至代码托管平台上</p>
+<p><strong> 4.gitlab平台重复以上两步，得到gitlab和gitlab.pub两个文件 </strong></p>
+<p><strong> 5.修改config文件，没有则创建 </strong></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.ssh/config </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Host abc<span class="class">.com</span></span><br><span class="line"></span><br><span class="line">HostName abc<span class="class">.com</span></span><br><span class="line"></span><br><span class="line">User git</span><br><span class="line"></span><br><span class="line">IdentityFile ~/.ssh/gitlab<span class="class">.pub</span></span><br><span class="line"></span><br><span class="line">Host github<span class="class">.com</span></span><br><span class="line"></span><br><span class="line">HostName github<span class="class">.com</span></span><br><span class="line"></span><br><span class="line">User git</span><br><span class="line"></span><br><span class="line">IdentityFile ~/.ssh/github.pub</span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="git_u5E73_u53F0_u591Assh_u914D_u7F6E_u9700_u6C42"><a href="#git_u5E73_u53F0_u591Assh_u914D_u7F6E_u9700_u6C42" class="headerlink" tit]]>
+    </summary>
+    
+      <category term="git" scheme="http://www.happycode.org/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[vim支持markdown高亮显示]]></title>
+    <link href="http://www.happycode.org/2016/01/09/vim-markdown/"/>
+    <id>http://www.happycode.org/2016/01/09/vim-markdown/</id>
+    <published>2016-01-09T08:40:21.000Z</published>
+    <updated>2016-01-13T12:10:08.000Z</updated>
+    <content type="html"><![CDATA[<p>第一次用vim编辑markdown发现竟然没有高亮显示，对于vim重度用户来说怎么能忍！于是google，下面是解决方法。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/.vim/</span><br><span class="line"><span class="built_in">cd</span> ~/.vim</span><br><span class="line">wget https://codeload.github.com/plasticboy/vim-markdown/tar.gz/master</span><br><span class="line">tar --strip=<span class="number">1</span> -zxf vim-markdown-master.tar.gz</span><br></pre></td></tr></table></figure>
+<p>参考：<a href="https://github.com/plasticboy/vim-markdown" target="_blank" rel="external">https://github.com/plasticboy/vim-markdown</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>第一次用vim编辑markdown发现竟然没有高亮显示，对于vim重度用户来说怎么能忍！于是google，下面是解决方法。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span]]>
+    </summary>
+    
+      <category term="vim markdown" scheme="http://www.happycode.org/tags/vim-markdown/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Docker简介]]></title>
+    <link href="http://www.happycode.org/2016/01/08/docker/"/>
+    <id>http://www.happycode.org/2016/01/08/docker/</id>
+    <published>2016-01-08T08:40:21.000Z</published>
+    <updated>2016-02-19T08:26:44.000Z</updated>
+    <content type="html"><![CDATA[<p>Docker 是一个开源项目，诞生于 2013 年初，最初是 dotCloud 公司内部的一个业余项目。它基于 Google 公司推出的 Go 语言实现。 项目后来加入了 Linux 基金会，遵从了 Apache 2.0 协议，项目代码在 GitHub 上进行维护。</p>
+<p>Docker 自开源后受到广泛的关注和讨论，以至于 dotCloud 公司后来都改名为 Docker Inc。Redhat 已经在其 RHEL6.5 中集中支持 Docker；Google 也在其 PaaS 产品中广泛应用。<br>Docker 项目的目标是实现轻量级的操作系统虚拟化解决方案。 Docker 的基础是 Linux 容器（LXC）等技术。</p>
+<p>在 LXC 的基础上 Docker进行了进一步的封装，让用户不需要去关心容器的管理，使得操作更为简便。用户操作 Docker 的容器就像操作一个快速轻量级的虚拟机一样简单。</p>
+<p>下面的图片比较了 Docker 和传统虚拟化方式的不同之处，可见容器是在操作系统层面上实现虚拟化，直接复用本地主机的操作系统，而传统方式则是在硬件层面实现。</p>
+<p>待续…<br><img src="/image/virtualization.png" alt=""><br><img src="/image/docker.png" alt=""></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Docker 是一个开源项目，诞生于 2013 年初，最初是 dotCloud 公司内部的一个业余项目。它基于 Google 公司推出的 Go 语言实现。 项目后来加入了 Linux 基金会，遵从了 Apache 2.0 协议，项目代码在 GitHub 上进行维护。</p>]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <link href="http://www.happycode.org/2016/01/08/hello-world/"/>
+    <id>http://www.happycode.org/2016/01/08/hello-world/</id>
+    <published>2016-01-08T08:18:08.000Z</published>
+    <updated>2016-01-08T08:18:08.000Z</updated>
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick_Start"><a href="#Quick_Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create_a_new_post"><a href="#Create_a_new_post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run_server"><a href="#Run_server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate_static_files"><a href="#Generate_static_files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy_to_remote_sites"><a href="#Deploy_to_remote_sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.]]>
+    </summary>
+    
+  </entry>
+  
+</feed>

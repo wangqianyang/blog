@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Happy Code]]></subtitle>
   <link href="http://www.happycode.org/atom.xml" rel="self"/>
   <link href="http://www.happycode.org/"/>
-  <updated>2016-03-07T06:32:09.000Z</updated>
+  <updated>2016-03-17T03:37:17.000Z</updated>
   <id>http://www.happycode.org/</id>
   
   <author>
@@ -19,14 +19,14 @@
     <link href="http://www.happycode.org/2016/03/07/ssh-authorized/"/>
     <id>http://www.happycode.org/2016/03/07/ssh-authorized/</id>
     <published>2016-03-07T06:11:28.000Z</published>
-    <updated>2016-03-07T06:32:09.000Z</updated>
+    <updated>2016-03-17T03:37:17.000Z</updated>
     <content type="html"><![CDATA[<p>背景：在Mac上使用iTerm登陆linux服务器，一直要提示输入密码，比较麻烦，所以采用免密码的方式登陆比较方便，所谓无密码登陆其实是指通过证书认证的方式登陆，使用一种被称为”公私钥”认证的方式来进行ssh登录。</p>
 <p> 　　在linux系统中,ssh是远程登录的默认工具,因为该工具的协议使用了RSA/DSA的加密算法.该工具做linux系统的远程管理是非常安全的。telnet,因为其不安全性,在linux系统中被搁置使用了。</p>
 <p>　　“公私钥”认证方式简单的解释:首先在客户端上创建一对公私钥 （公钥文件：~/.ssh/id_rsa.pub； 私钥文件：~/.ssh/id_rsa）。然后把公钥放到服务器上（~/.ssh/authorized_keys）, 自己保留好私钥.在使用ssh登录时,ssh程序会发送私钥去和服务器上的公钥做匹配.如果匹配成功就可以登录了。</p>
 <p><strong> 场景：从Mac免密码登陆到10.105.18.xx服务器 </strong></p>
 <h3 id="u751F_u4EA7_u5BC6_u94A5_u5BF9"><a href="#u751F_u4EA7_u5BC6_u94A5_u5BF9" class="headerlink" title="生产密钥对"></a>生产密钥对</h3><p><code>ssh-keygen -t rsa -C &quot;xxxx@gmail.com”</code></p>
 <p>在Mac上输入上面的命令，然后一路点回车，会在当前用户的.ssh/目录下生成id_rsa(私钥)，id_rsa(公钥)。</p>
-<h3 id="u628A_u516C_u94A5_u4E0A_u4F20_u5230_u767B_u9646_u7684_u76EE_u6807_u670D_u52A1_u5668"><a href="#u628A_u516C_u94A5_u4E0A_u4F20_u5230_u767B_u9646_u7684_u76EE_u6807_u670D_u52A1_u5668" class="headerlink" title="把公钥上传到登陆的目标服务器"></a>把公钥上传到登陆的目标服务器</h3><p><code>scp .ssh/id_rsa.pub root@10.105.18.xx:/root/.ssh/xxx.pub</code><br><code>root@10.105.18.45&#39;s password:</code></p>
+<h3 id="u628A_u516C_u94A5_u4E0A_u4F20_u5230_u767B_u9646_u7684_u76EE_u6807_u670D_u52A1_u5668"><a href="#u628A_u516C_u94A5_u4E0A_u4F20_u5230_u767B_u9646_u7684_u76EE_u6807_u670D_u52A1_u5668" class="headerlink" title="把公钥上传到登陆的目标服务器"></a>把公钥上传到登陆的目标服务器</h3><p><code>scp .ssh/id_rsa.pub root@10.105.18.xx:/root/.ssh/xxx.pub</code><br><code>root@10.105.18.xx&#39;s password:</code></p>
 <p>在Mac上输入上面的命令，把id_rsa.pub上传到要登陆的服务器10.105.18.xx，注意要输入目标服务器的密码。</p>
 <h3 id="u5728_u76EE_u6807_u670D_u52A1_u5668_u628A_u516C_u94A5_u52A0_u5165_u5230authorized_keys"><a href="#u5728_u76EE_u6807_u670D_u52A1_u5668_u628A_u516C_u94A5_u52A0_u5165_u5230authorized_keys" class="headerlink" title="在目标服务器把公钥加入到authorized_keys"></a>在目标服务器把公钥加入到authorized_keys</h3><p><code>cat ~/.ssh/xxx.pub &gt;&gt; ~/.ssh/authorized_keys</code><br><code>chmod 600 ~/.ssh/authorized_keys</code></p>
 <p>注意：要把authorized_keys文件赋予600权限</p>

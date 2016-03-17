@@ -4,7 +4,7 @@
 <p><strong> 场景：从Mac免密码登陆到10.105.18.xx服务器 </strong></p>
 <h3 id="u751F_u4EA7_u5BC6_u94A5_u5BF9"><a href="#u751F_u4EA7_u5BC6_u94A5_u5BF9" class="headerlink" title="生产密钥对"></a>生产密钥对</h3><p><code>ssh-keygen -t rsa -C &quot;xxxx@gmail.com”</code></p>
 <p>在Mac上输入上面的命令，然后一路点回车，会在当前用户的.ssh/目录下生成id_rsa(私钥)，id_rsa(公钥)。</p>
-<h3 id="u628A_u516C_u94A5_u4E0A_u4F20_u5230_u767B_u9646_u7684_u76EE_u6807_u670D_u52A1_u5668"><a href="#u628A_u516C_u94A5_u4E0A_u4F20_u5230_u767B_u9646_u7684_u76EE_u6807_u670D_u52A1_u5668" class="headerlink" title="把公钥上传到登陆的目标服务器"></a>把公钥上传到登陆的目标服务器</h3><p><code>scp .ssh/id_rsa.pub root@10.105.18.xx:/root/.ssh/xxx.pub</code><br><code>root@10.105.18.45&#39;s password:</code></p>
+<h3 id="u628A_u516C_u94A5_u4E0A_u4F20_u5230_u767B_u9646_u7684_u76EE_u6807_u670D_u52A1_u5668"><a href="#u628A_u516C_u94A5_u4E0A_u4F20_u5230_u767B_u9646_u7684_u76EE_u6807_u670D_u52A1_u5668" class="headerlink" title="把公钥上传到登陆的目标服务器"></a>把公钥上传到登陆的目标服务器</h3><p><code>scp .ssh/id_rsa.pub root@10.105.18.xx:/root/.ssh/xxx.pub</code><br><code>root@10.105.18.xx&#39;s password:</code></p>
 <p>在Mac上输入上面的命令，把id_rsa.pub上传到要登陆的服务器10.105.18.xx，注意要输入目标服务器的密码。</p>
 <h3 id="u5728_u76EE_u6807_u670D_u52A1_u5668_u628A_u516C_u94A5_u52A0_u5165_u5230authorized_keys"><a href="#u5728_u76EE_u6807_u670D_u52A1_u5668_u628A_u516C_u94A5_u52A0_u5165_u5230authorized_keys" class="headerlink" title="在目标服务器把公钥加入到authorized_keys"></a>在目标服务器把公钥加入到authorized_keys</h3><p><code>cat ~/.ssh/xxx.pub &gt;&gt; ~/.ssh/authorized_keys</code><br><code>chmod 600 ~/.ssh/authorized_keys</code></p>
 <p>注意：要把authorized_keys文件赋予600权限</p>

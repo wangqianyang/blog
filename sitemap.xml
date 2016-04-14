@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.happycode.org/2016/04/14/linux-find/</loc>
+    <lastmod>2016-04-14T06:08:23.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.happycode.org/2016/03/07/ssh-authorized/</loc>
     <lastmod>2016-03-17T03:37:17.000Z</lastmod>
   </url>

@@ -1,2 +1,2 @@
 # blog
-wangqianyang@gmail.com
+qianyang.wang@gmail.com
